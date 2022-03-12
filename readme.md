@@ -1,4 +1,4 @@
-# Lichess Player Info Viewer
+# Chess Player Info Viewer
 
 
 
@@ -12,9 +12,9 @@ https://restapiservice.damiancyper.repl.co/
 
 Prosta aplikacja webowa stworzona w celu przećwiczenia korzystania z REST API. 
 
-Na stronie głównej można zobaczyć prosty formularz, który umożliwia podanie nazwy użytkownika gracza z serwisu szachowego lichess, a także podanie tempa gry - wtedy użytkownik aplikacji zobaczy więcej danych. 
+Na stronie głównej można zobaczyć prosty formularz, który umożliwia podanie nazwy użytkownika gracza z serwisu szachowego lichess lub chesscom, a także podanie tempa gry - wtedy użytkownik aplikacji zobaczy więcej danych. 
 
-Po wypełnieniu formularza serwer aplikacji odpytuje zewnętrzne api serwisu lichess o odpowiednie dane na temat gracza o nazwie podanej przez użytkownika. Dane te są następnie odpowiednio przygotowywane do wyświetlenia.
+Po wypełnieniu formularza serwer aplikacji odpytuje zewnętrzne api serwisów lichess oraz chesscom o odpowiednie dane na temat gracza o nazwie podanej przez użytkownika. Dane te są następnie odpowiednio przygotowywane do wyświetlenia.
 
 
 
@@ -43,15 +43,8 @@ $ python ./app.py
 
 Aplikacja zostanie uruchomiona na porcie 5000:
 
-```http
 http://127.0.0.1:5000/
-```
-
-
 
 Innym sposobem skorzystania z aplikacji jest skorzystanie z linku:
 
-```http
 https://restapiservice.damiancyper.repl.co/
-```
-
