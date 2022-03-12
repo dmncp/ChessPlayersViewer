@@ -1,0 +1,203 @@
+{% extends "index.html" %}
+{% block content %}
+{% if username %}
+    <h1 class="text-center mt-5">{{username}} info: </h1>
+    {% if lichess %}
+        <p class="text-center">{{lichess[0]}}</p>
+    {% else %}
+    <div class="container d-flex justify-content-center">
+        <div class="row mt-3 text-center">
+            <p class="col-6"><strong>Username:</strong><br>{{player.username}}</p>
+            <p class="col-6"><strong>Title:</strong><br>{{player.title}}</p>
+            {% if player.location %}
+                <p class="col-6"><strong>Country:</strong><br>{{player.country}}</p>
+                <p class="col-6"><strong>Location:</strong><br>{{player.location}}</p>
+                <p class="col-6"><strong>First name:</strong><br>{{player.first_name}}</p>
+                <p class="col-6"><strong>Last name:</strong><br>{{player.last_name}}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center mt-5 col-6">Lichess info: </h1>
+            <h1 class="text-center mt-5 col-6">Chess.com info:</h1>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="row">
+                    {% if lichess %}
+                        <p class="text-center">{{lichess[0]}}</p>
+                    {% else %}
+                        <p class="col-6"><strong>Created at:</strong><br>{{player.created_date}}</p>
+                        <p class="col-6"><strong>Is online:</strong><br>{{player.online}}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    {% if chesscom %}
+                        <p class="text-center">{{chesscom[0]}}</p>
+                    {% else %}
+                        <p class="col-4"><strong>Followers:</strong><br>{{player.chesscom_followers}}</p>
+                        <p class="col-4"><strong>Last online:</strong><br>{{player.chesscom_last_online}}</p>
+                        <p class="col-4"><strong>Joined:</strong><br>{{player.chesscom_joined}}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="text-center mt-5">Lichess game stats: </h1>
+    {% if lichess %}
+        <p class="text-center">{{lichess[0]}}</p>
+    {% else %}
+    <div class="container mx-auto">
+        <div class="row mt-3">
+            <p class="col-4"><strong>Number of games all:</strong><br>{{player.no_games}}</p>
+            <p class="col-4"><strong>Games against AI:</strong><br>{{player.games_against_ai}}</p>
+            <p class="col-4"><strong>Games against human:</strong><br>{{player.games_against_human}}</p>
+        </div>
+        <div class="row mt-3">
+            <p class="col-4"><strong>Number of wins:</strong><br>{{player.no_wins}}</p>
+            <p class="col-4"><strong>Number of draws:</strong><br>{{player.no_draws}}</p>
+            <p class="col-4"><strong>Number of losses:</strong><br>{{player.no_losses}}</p>
+        </div>
+        <div class="row mt-3 d-flex justify-content-center">
+            <p class="col-4 my-auto">
+                <strong>Wins ratio:</strong><br>{{player.get_win_percentage()}}% <br><br>
+                <strong>Draws ratio:</strong><br>{{player.get_draw_percentage()}}% <br><br>
+                <strong>Losses ratio:</strong><br>{{player.get_loss_percentage()}}%
+            </p>
+            <img src={{player.games_stats_chart_url()}} class="col-3">
+        </div>
+    </div>
+    {% endif %}
+
+    <h1 class="text-center mt-5">Chess.com game stats: </h1>
+    {% if chesscom %}
+        <p class="text-center">{{chesscom[0]}}</p>
+    {% else %}
+    <div class="container mx-auto">
+        <div class="row mt-3">
+            <p class="col-3"><strong>Number of games all:</strong><br>{{player.get_all_chesscom_games()}}</p>
+            <p class="col-3"><strong>Number of wins:</strong><br>{{player.get_all_chesscom_games_by_result('win')}}</p>
+            <p class="col-3"><strong>Number of draws:</strong><br>{{player.get_all_chesscom_games_by_result('draw')}}</p>
+            <p class="col-3"><strong>Number of losses:</strong><br>{{player.get_all_chesscom_games_by_result('loss')}}</p>
+        </div>
+        <div class="row mt-3 d-flex justify-content-center">
+            <p class="col-4 my-auto">
+                <strong>Wins ratio:</strong><br>{{player.get_chesscom_win_percentage()}}% <br><br>
+                <strong>Draws ratio:</strong><br>{{player.get_chesscom_draw_percentage()}}% <br><br>
+                <strong>Losses ratio:</strong><br>{{player.get_chesscom_loss_percentage()}}%
+            </p>
+            <img src={{player.games_chesscom_stats_chart_url()}} class="col-3">
+        </div>
+    </div>
+    {% endif %}
+
+    {% if game_type and game_type != 'unspecified' %}
+        <h1 class="text-center mt-5">Lichess stats in {{game_type}} games: </h1>
+        {% if lichess %}
+            <p class="text-center">{{lichess[0]}}</p>
+        {% else %}
+        <div class="container">
+            <div class="row">
+                <p class="col-4"><strong>Rating:</strong><br>{{player.rating_specify}}</p>
+                <p class="col-4"><strong>Percentile:</strong><br>{{player.percentile}}</p>
+                <p class="col-4"><strong>Progress:</strong><br>{{player.progress_specify}}</p>
+            </div>
+            <div class="row">
+                <p class="col-4"><strong>Global rank position:</strong><br>{{player.rank}}</p>
+                <p class="col-4"><strong>Opponent ranking in best win:</strong><br>{{player.best_win}}</p>
+                <p class="col-4"><strong>Opponent ranking in the worst loss:</strong><br>{{player.worst_loss}}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <h1 class="text-center mt-5">Chess.com stats in {{game_type}} games: </h1>
+        {% if chesscom %}
+            <p class="text-center">{{chesscom[0]}}</p>
+        {% else %}
+        <div class="container text-center">
+            {% set stats = player.get_perf_details(game_type) %}
+            <div class="row">
+                <p class="col-6"><strong>Best rating:</strong><br>{{stats[3]}}</p>
+                <p class="col-6"><strong>Date:</strong><br>{{stats[2]}}</p>
+                <p class="col-6"><strong>Last rating:</strong><br>{{stats[1]}}</p>
+                <p class="col-6"><strong>Date:</strong><br>{{stats[0]}}</p>
+            </div>
+            <div class="row">
+                <p class="col-4"><strong>Number of wins:</strong><br>{{stats[4]}}</p>
+                <p class="col-4"><strong>Number of draws:</strong><br>{{stats[5]}}</p>
+                <p class="col-4"><strong>Number of losses:</strong><br>{{stats[6]}}</p>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    <h1 class="text-center mt-5">Lichess ratings history: </h1>
+    {% if lichess %}
+        <p class="text-center">{{lichess[0]}}</p>
+    {% else %}
+    <div class="center">
+        <div class="row d-flex justify-content-center mt-3">
+            {% for chart in player.ratings_history %}
+                <img class="col-5 my-3" src={{chart['chart_url']}}>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <h1 class="text-center mt-5">Lichess games details: </h1>
+    {% if lichess %}
+        <p class="text-center">{{lichess[0]}}</p>
+    {% else %}
+    <div class="container">
+        <div class="d-flex justify-content-center mt-3">
+            {% for key, value in player.perfs.items() %}
+                <table class="table table-bordered m-3 text-center">
+                    <tr><th colspan="2">{{key}}</th></tr>
+                    {% for vkey, vvalue in value.items() %}
+                        {% if vkey != 'rd' and vkey != 'prov' %}
+                            <tr>
+                                <td style="width: 50%">{{vkey}}</td>
+                                <td style="width: 50%">{{vvalue}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <h1 class="text-center mt-5">Chess.com games details: </h1>
+    {% if chesscom %}
+        <p class="text-center">{{chesscom[0]}}</p>
+    {% else %}
+    <div class="container">
+        <div class="d-flex justify-content-center mt-3">
+            {% for game_type in ['bullet', 'blitz', 'rapid', 'daily'] %}
+                {% set stats = player.get_perf_details(game_type) %}
+                <table class="table table-bordered m-3 text-center">
+                    <tr><th colspan="2">{{game_type}}</th></tr>
+                    <tr>
+                        <td style="width: 50%">games</td>
+                        <td style="width: 50%">{{stats[4] + stats[5] + stats[6]}}</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%">best rating</td>
+                        <td style="width: 50%">{{stats[3]}}</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%">best rating date</td>
+                        <td style="width: 50%">{{stats[2]}}</td>
+                    </tr>
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

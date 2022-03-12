@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <title>Lichess Stats Viewer</title>
+    </head>
+
+    <body>
+        <div class="container mt-5">
+            <form class="row d-flex justify-content-center" method="POST" action="/player_stats">
+                <div class="form-group col-5">
+                    <label for="username">Username:</label>
+                    <input class="form-control" type="text" name="username" id="username" required><br>
+                </div>
+
+                <div class="form-group col-5">
+                    <label for="game_type">Game type (optional)</label>
+                    <select class="form-control" id="game_type" name="game_type">
+                        <option value="unspecified" selected>unspecified</option>
+                        <option value="bullet">bullet</option>
+                        <option value="blitz">blitz</option>
+                        <option value="rapid">rapid</option>
+                        <option value="classical">classical</option>
+                        <option value="correspondence">correspondence</option>
+                    </select>
+                </div>
+
+                <input type="submit" value="Check out!" class="btn btn-primary col-3">
+            </form>
+        </div>
+
+        <div class="container d-flex justify-content-center my-5">
+            <button class="btn btn-primary col-3 mx-3" onclick="runExample('MarianczeLLini')">Example 1 (lichess only)</button>
+            <button class="btn btn-primary col-3 mx-3" onclick="runExample('mrsteradian360')">Example 2 (chesscom only)</button>
+            <button class="btn btn-primary col-3 mx-3" onclick="runExample('dmncp')">Example 3 (chesscom and lichess)</button>
+            <a href="https://www.postman.com/orbital-module-cosmonaut-77191133/workspace/rest-api-ex/collection/19888390-c96a00ad-82bc-4716-a66f-ff6a5ae03740?ctx=info">Postman</a>
+        </div>
+        {% block content %}
+        {% endblock %}
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script>
+            function runExample(name){
+                let username = document.getElementById('username');
+                username.value = name;
+            }
+        </script>
+    </body>
+</html>
