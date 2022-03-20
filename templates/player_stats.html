@@ -180,11 +180,18 @@
         <div class="d-flex justify-content-center mt-3">
             {% for game_type in ['bullet', 'blitz', 'rapid', 'daily'] %}
                 {% set stats = player.get_perf_details(game_type) %}
+                {% if stats[2] != 'no data' or stats[3] != 'no data' or stats[4] != 'no data' or stats[5] != 'no data' or stats[6] != 'no data'%}
                 <table class="table table-bordered m-3 text-center">
                     <tr><th colspan="2">{{game_type}}</th></tr>
                     <tr>
                         <td style="width: 50%">games</td>
-                        <td style="width: 50%">{{stats[4] + stats[5] + stats[6]}}</td>
+                        <td style="width: 50%">
+                            {%if stats[4] == 'no data' or stats[5] == 'no data' or stats[6] == 'no data'%}
+                                no data
+                            {% else %}
+                                {{stats[4] + stats[5] + stats[6]}}
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <td style="width: 50%">best rating</td>
@@ -195,6 +202,7 @@
                         <td style="width: 50%">{{stats[2]}}</td>
                     </tr>
                 </table>
+            {%endif%}
             {% endfor %}
         </div>
     </div>
